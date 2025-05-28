@@ -90,9 +90,11 @@ jobs:
       shell: bash
       run: |
         cd build && ninja
+    - name: Upload Build Artifacts
     - uses: actions/upload-artifact@v4
       with:
-        name: aseprite
+        name: aseprite-${{ runner.os }}-${{ matrix.build_type }}-${{ github.run_id }}  # 加入运行ID确保唯一
         path: |
-          D:/a/aseprite/aseprite/build/bin/data
-          D:/a/aseprite/aseprite/build/bin/aseprite.exe
+            build/bin/aseprite*
+            build/bin/*.dll
+            retention-days: 3  # 自动清理旧文件
